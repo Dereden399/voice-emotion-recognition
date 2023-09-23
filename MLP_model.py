@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 
 class MLP_model:
   data = FeaturesExtractor()
-  model = MLPClassifier(random_state=1, max_iter=300)
+  model = MLPClassifier(max_iter=500, hidden_layer_sizes=[200, 200])
   is_trained = False
   X_train, X_test, y_train, y_test = ([], [], [], [])
 
