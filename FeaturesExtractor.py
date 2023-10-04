@@ -5,6 +5,7 @@ from utils import extract_features
 import numpy as np
 import os
 from tqdm import tqdm
+from sklearn.decomposition import PCA
 
 max_threads = 4
 
@@ -56,6 +57,7 @@ class FeaturesExtractor:
     np.savez("pickles/data", features=features_array, label=label_array)
     self.features = features_array
     self.labels = label_array
+
     print("Successfully extracted features from the dataset")
     
 
@@ -70,6 +72,7 @@ class FeaturesExtractor:
     
     self.features = features_array
     self.labels = label_array
+
     print("Successfully loaded features and labels from pickle")
 
   def load_samples(self, path, mode="new"):
@@ -80,6 +83,8 @@ class FeaturesExtractor:
 
   
   def decompose_audio(self, path):
-    raise NotImplementedError()
+    file, sr = load(path, sr=None)
+    features = extract_features(file, sr=sr)
+    return features.reshape(1, -1)
 
   

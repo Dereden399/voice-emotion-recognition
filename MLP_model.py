@@ -22,7 +22,11 @@ class MLP_model:
       self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.data.features, self.data.labels, test_size=0.33, shuffle=True)
       self.model.fit(self.X_train, self.y_train)
       print("Done")
-  def predict(self, data_set):
+  def predictSet(self, data_set):
     return self.model.predict(data_set)
+  def predictEmotion(self, path):
+    features = self.data.decompose_audio(path)
+    return self.model.predict(features)
+  
   
 
