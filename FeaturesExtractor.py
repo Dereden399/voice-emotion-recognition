@@ -62,7 +62,6 @@ class FeaturesExtractor:
     
 
   def load_from_pickle(self):
-    print("Loading information from pickled file")
     files = np.load("pickles/data.npz")
   
     features_array = files["features"]
@@ -73,13 +72,17 @@ class FeaturesExtractor:
     self.features = features_array
     self.labels = label_array
 
-    print("Successfully loaded features and labels from pickle")
-
   def load_samples(self, path, mode="new"):
-    if mode == "new":
-      self.load_samples_new(path)
-    else:
-      self.load_from_pickle()
+    try:
+      if mode == "new":
+        self.load_samples_new(path)
+      else:
+        self.load_from_pickle()
+      self.labels = self.labels - 1
+      return True
+    except:
+      return False
+    
 
   
   def decompose_audio(self, path):
