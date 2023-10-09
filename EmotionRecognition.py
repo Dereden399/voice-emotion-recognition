@@ -30,14 +30,20 @@ class EmotionRecognition:
       self.cnn_model.compile_model()
       sp.ok("DONE!")
   
-  def train_models(self):
+  def train_models(self, mlp_file=None, load_saved=False):
     with yaspin(Spinners.line, text="Training MLP model...") as sp:
-      success = self.mlp_model.train_model(self.X_train, self.y_train)
+      if load_saved:
+        success = self.mlp_model.train_model(self.X_train, self.y_train, from_file="pickles/mlp_model.skop")
+      else:
+        success = self.mlp_model.train_model(self.X_train, self.y_train)
       if success:
         sp.ok("DONE!")
       else:
         sp.fail("FAIL!")
-    self.cnn_model.train_model(self.X_train, self.y_train)
+    if load_saved:
+      self.cnn_model.train_model(self.X_train, self.y_train, from_file="pickles/cnn_model.keras")
+    else:
+      self.cnn_model.train_model(self.X_train, self.y_train)
 
   def predict_mlp(self, datapoints):
     return self.mlp_model.predict_emotions(datapoints)

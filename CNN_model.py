@@ -1,6 +1,7 @@
-from keras import Sequential
+from keras import Sequential, models
 from keras.layers import Conv1D, Dense, MaxPooling1D, Flatten
 from keras.losses import SparseCategoricalCrossentropy
+import os
 
 class CNN_model:
   def __init__(self):
@@ -12,10 +13,24 @@ class CNN_model:
     self.model.add(Dense(8, activation="softmax"))
   
   def compile_model(self):
-    self.model.compile(optimizer="adam", loss=SparseCategoricalCrossentropy())
+    if isinstance(self.model, Sequential):
+      self.model.compile(optimizer="adam", loss=SparseCategoricalCrossentropy())
+    else:
+      raise Exception("model is None")
 
-  def train_model(self, features, labels):
-    self.model.fit(features.reshape(features.shape[0], features.shape[1], 1), labels, epochs=10)
+  def train_model(self, features, labels, from_file=None):
+    if from_file:
+      if os.path.isfile(from_file) and from_file.endswith("cnn_model.keras"):
+        self.model = models.load_model(from_file)
+        return None;
+    if isinstance(self.model, Sequential):
+      self.model.fit(features.reshape(features.shape[0], features.shape[1], 1), labels, epochs=10)
+      self.model.save("pickles/cnn_model.keras")
+    else:
+      raise Exception("model is None")
   
   def predict_emotions(self, data_set):
-    return self.model.predict(data_set.reshape(data_set.shape[0], data_set.shape[1], 1))
+    if isinstance(self.model, Sequential):
+      return self.model.predict(data_set.reshape(data_set.shape[0], data_set.shape[1], 1))
+    else:
+      raise Exception("model is None")
