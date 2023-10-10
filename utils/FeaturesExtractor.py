@@ -1,11 +1,10 @@
 
 from librosa import load
 import concurrent.futures
-from utils import extract_features
+from utils.utils import extract_features
 import numpy as np
 import os
 from tqdm import tqdm
-from sklearn.decomposition import PCA
 
 max_threads = 4
 

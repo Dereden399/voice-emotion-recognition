@@ -7,13 +7,13 @@ class MLP_model:
   
   def train_model(self, features, labels, from_file=None):
     if from_file:
-      if os.path.isfile(from_file) and from_file.endswith("mlp_model.skop"):
-        unknown_types = sio.get_untrusted_types(file="my-model.skops")
-        self.model = sio.load("my-model.skops", trusted=unknown_types)
+      if os.path.isfile(from_file) and from_file.endswith("mlp_model.skops"):
+        unknown_types = sio.get_untrusted_types(file=from_file)
+        self.model = sio.load(from_file, trusted=unknown_types)
         return True
     try:
       self.model.fit(features, labels)
-      sio.dump(self.model, "pickles/mlp_model.skop")
+      sio.dump(self.model, "pickles/mlp_model.skops")
       return True
     except:
       return False

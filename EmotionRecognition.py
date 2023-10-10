@@ -1,6 +1,6 @@
-from FeaturesExtractor import FeaturesExtractor
-from MLP_model import MLP_model
-from CNN_model import CNN_model
+from utils.FeaturesExtractor import FeaturesExtractor
+from models.MLP_model import MLP_model
+from models.CNN_model import CNN_model
 from sklearn.model_selection import train_test_split
 from yaspin import yaspin
 from yaspin.spinners import Spinners
@@ -30,10 +30,10 @@ class EmotionRecognition:
       self.cnn_model.compile_model()
       sp.ok("DONE!")
   
-  def train_models(self, mlp_file=None, load_saved=False):
+  def train_models(self, load_saved=False):
     with yaspin(Spinners.line, text="Training MLP model...") as sp:
       if load_saved:
-        success = self.mlp_model.train_model(self.X_train, self.y_train, from_file="pickles/mlp_model.skop")
+        success = self.mlp_model.train_model(self.X_train, self.y_train, from_file="pickles/mlp_model.skops")
       else:
         success = self.mlp_model.train_model(self.X_train, self.y_train)
       if success:

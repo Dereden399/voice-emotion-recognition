@@ -1,6 +1,7 @@
 from keras import Sequential, models
 from keras.layers import Conv1D, Dense, MaxPooling1D, Flatten
 from keras.losses import SparseCategoricalCrossentropy
+from keras.optimizers import Adam
 import os
 
 class CNN_model:
@@ -14,7 +15,7 @@ class CNN_model:
   
   def compile_model(self):
     if isinstance(self.model, Sequential):
-      self.model.compile(optimizer="adam", loss=SparseCategoricalCrossentropy())
+      self.model.compile(optimizer=Adam(), loss=SparseCategoricalCrossentropy())
     else:
       raise Exception("model is None")
 

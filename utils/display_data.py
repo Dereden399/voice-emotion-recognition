@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
-from FeaturesExtractor import FeaturesExtractor
-import numpy as np
+from utils.FeaturesExtractor import FeaturesExtractor
 from sklearn.manifold import TSNE
 
 data = FeaturesExtractor()
